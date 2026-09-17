@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
+import 'package:go_router/go_router.dart';
 
-PreferredSizeWidget draftAssistantAppBar(String title) {
+PreferredSizeWidget draftAssistantAppBar(BuildContext context, String title) {
   return AppBar(
     title: Row(
       mainAxisSize: MainAxisSize.max,
@@ -25,7 +26,9 @@ PreferredSizeWidget draftAssistantAppBar(String title) {
     actions: [
       IconButton(
         icon: const iconoir.User(),
-        onPressed: () {},
+        onPressed: () {
+          context.go('/profile');
+        },
       ),
     ],
   );

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 
-Widget draftAssistantBottomNavigationBar(int selectedIndex) {
+Widget draftAssistantBottomNavigationBar(BuildContext context, int selectedIndex) {
   return NavigationBar(
     selectedIndex: selectedIndex,
     onDestinationSelected: (index) {
-      // navigation logic
+      const routes = ['/', '/saves', '/profile'];
+      context.go(routes[index]);
     },
     destinations: const [
       NavigationDestination(
