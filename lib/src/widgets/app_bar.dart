@@ -9,11 +9,9 @@ PreferredSizeWidget draftAssistantAppBar(BuildContext context, String title) {
       children: [
         Image.asset(
           'assets/icons/draft_assistant_logo.png',
-          width: 128,
-          height: 128,
-          fit: BoxFit.contain,
+          width: 48,
+          height: 48,
         ),
-        SizedBox(width: 8),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
