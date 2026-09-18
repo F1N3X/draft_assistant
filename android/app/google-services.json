@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "272729879612",
+    "project_id": "draft-assistant-cd283",
+    "storage_bucket": "draft-assistant-cd283.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:272729879612:android:fd573648b807da5c667f39",
+        "android_client_info": {
+          "package_name": "com.example.draft_assistant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "272729879612-vru1qjdkq83lur6do1vpjrp43rgb2722.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1_dmk7onp1Pb9DGpVN1Dd-7DI7Nl3kP4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "272729879612-vru1qjdkq83lur6do1vpjrp43rgb2722.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
