@@ -1,6 +1,7 @@
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:draft_assistant/src/services/firestore_service.dart';
 
 Future<void> signInWithGoogle(BuildContext context) async {
   try {
@@ -10,12 +11,10 @@ Future<void> signInWithGoogle(BuildContext context) async {
       throw Exception('La variable GOOGLE_CLIENT_ID est introuvable.');
     }
 
-    await GoogleSignIn.instance.initialize(
-      serverClientId: serverClientId,
-    );
+    await GoogleSignIn.instance.initialize(serverClientId: serverClientId);
 
     final GoogleSignInAccount? googleUser = await GoogleSignIn.instance.authenticate();
-    
+
     if (googleUser == null) return;
 
     final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
@@ -24,6 +23,10 @@ Future<void> signInWithGoogle(BuildContext context) async {
 
     final UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
     final firebaseUser = userCredential.user;
+
+    if (firebaseUser != null) {
+      await addUser(firebaseUser.uid);
+    }
 
     if (firebaseUser != null && context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
