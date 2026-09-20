@@ -9,10 +9,13 @@ class SavesView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: draftAssistantAppBar(context, 'Draft sauvegardées'),
-      body: const Center(
-        child: Text('This is the Saves View'),
+      body: Center(
+        child: Text(
+          'This is the Saves View',
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
       ),
-      bottomNavigationBar: draftAssistantBottomNavigationBar(context, 1)
+      bottomNavigationBar: draftAssistantBottomNavigationBar(context, 1),
     );
   }
 }

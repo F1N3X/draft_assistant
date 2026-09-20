@@ -4,12 +4,13 @@ import 'package:firebase_core/firebase_core.dart';
 // import 'package:firebase_ai/firebase_ai.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:flutter/foundation.dart';
+import 'package:draft_assistant/src/theme/app_theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await FirebaseAppCheck.instance.activate(
-    providerAndroid: kDebugMode 
+    providerAndroid: kDebugMode
         ? AndroidDebugProvider()
         : AndroidPlayIntegrityProvider(),
   );
@@ -28,6 +29,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       routerConfig: appRouter,
+      theme: AppTheme.theme,
     );
   }
 }

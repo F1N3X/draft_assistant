@@ -3,26 +3,28 @@ import 'package:go_router/go_router.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 
 Widget draftAssistantBottomNavigationBar(BuildContext context, int selectedIndex) {
+  final scheme = Theme.of(context).colorScheme;
+
   return NavigationBar(
     selectedIndex: selectedIndex,
     onDestinationSelected: (index) {
       const routes = ['/', '/saves', '/profile'];
       context.go(routes[index]);
     },
-    destinations: const [
+    destinations: [
       NavigationDestination(
-        icon: const iconoir.Gamepad(),
-        selectedIcon: const iconoir.Gamepad(),
+        icon: iconoir.Gamepad(color: scheme.onSecondary),
+        selectedIcon: iconoir.Gamepad(color: scheme.primary),
         label: 'Draft',
       ),
       NavigationDestination(
-        icon: const iconoir.Bookmark(),
-        selectedIcon: const iconoir.Bookmark(),
+        icon: iconoir.Bookmark(color: scheme.onSecondary),
+        selectedIcon: iconoir.Bookmark(color: scheme.primary),
         label: 'Sauvegardées',
       ),
       NavigationDestination(
-        icon: const iconoir.User(),
-        selectedIcon: const iconoir.User(),
+        icon: iconoir.User(color: scheme.onSecondary),
+        selectedIcon: iconoir.User(color: scheme.primary),
         label: 'Profile',
       ),
     ],

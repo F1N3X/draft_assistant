@@ -15,8 +15,11 @@ PreferredSizeWidget draftAssistantAppBar(BuildContext context, String title) {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Draft Assistant', style: TextStyle(fontSize: 12)),
-            Text(title),
+            Text(
+              'Draft Assistant',
+              style: Theme.of(context).textTheme.labelSmall,
+            ),
+            Text(title, style: Theme.of(context).textTheme.titleLarge),
           ],
         ),
       ],
@@ -24,9 +27,16 @@ PreferredSizeWidget draftAssistantAppBar(BuildContext context, String title) {
     actions: [
       IconButton(
         icon: const iconoir.User(),
+        tooltip: 'Ouvrir le profil',
         onPressed: () {
           context.go('/profile');
         },
+        style: IconButton.styleFrom(
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
       ),
     ],
   );

@@ -12,13 +12,25 @@ class ProfileView extends StatelessWidget {
     return Scaffold(
       appBar: draftAssistantAppBar(context, 'Profile'),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const Text('This is the Profile View'),
-            SignInButton(Buttons.google, onPressed: () => signInWithGoogle(context)),
-        ],)
+        padding: const EdgeInsets.all(24),
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'This is the Profile View',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              const SizedBox(height: 24),
+              SignInButton(
+                Buttons.google,
+                onPressed: () => signInWithGoogle(context),
+              ),
+            ],
+          ),
+        ),
       ),
-      bottomNavigationBar: draftAssistantBottomNavigationBar(context, 2)
+      bottomNavigationBar: draftAssistantBottomNavigationBar(context, 2),
     );
   }
 }
