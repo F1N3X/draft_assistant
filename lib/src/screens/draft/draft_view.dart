@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:draft_assistant/src/widgets/app_bar.dart';
 import 'package:draft_assistant/src/widgets/bottom_navigation_bar.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
@@ -41,7 +42,10 @@ class DraftView extends StatelessWidget {
                                 children: [
                                   for (int i = 0; i < 5; i++)
                                     ElevatedButton(
-                                      onPressed: () {},
+                                      onPressed: () => context.pushNamed(
+                                        'champions-list',
+                                        queryParameters: {'label': 'Ban bleu ${i + 1}'},
+                                      ),
                                       style: ElevatedButton.styleFrom(
                                         minimumSize: const Size(40, 40),
                                       ),
@@ -66,7 +70,10 @@ class DraftView extends StatelessWidget {
                                 children: [
                                   for (int i = 0; i < 5; i++)
                                     ElevatedButton(
-                                      onPressed: () {},
+                                      onPressed: () => context.pushNamed(
+                                        'champions-list',
+                                        queryParameters: {'label': 'Ban rouge ${i + 1}'},
+                                      ),
                                       style: ElevatedButton.styleFrom(
                                         minimumSize: const Size(40, 40),
                                       ),
