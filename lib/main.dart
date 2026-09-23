@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:draft_assistant/src/router/app_router.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 // import 'package:firebase_ai/firebase_ai.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:flutter/foundation.dart';
@@ -18,7 +19,7 @@ Future<void> main() async {
   // final prompt = [Content.text('Say hi.')];
   // final response = await model.generateContent(prompt);
   // print(response.text);
-  runApp(const MainApp());
+  runApp(const ProviderScope(child: MainApp()));
 }
 
 class MainApp extends StatelessWidget {
