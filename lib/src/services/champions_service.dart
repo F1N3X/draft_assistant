@@ -16,8 +16,13 @@ class ChampionsService {
       throw Exception('Aucune donnée reçue');
     }
 
-    return data.values
-        .map((champion) => Champions.fromJson(champion as Map<String, dynamic>))
+    final championsData = data as Map<String, dynamic>;
+
+    return championsData.values
+        .map<Champions>(
+          (champion) =>
+              Champions.fromJson(Map<String, dynamic>.from(champion as Map)),
+        )
         .toList(growable: false);
   }
 }

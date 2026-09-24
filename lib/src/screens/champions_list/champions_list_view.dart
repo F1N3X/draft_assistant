@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:draft_assistant/src/widgets/app_bar.dart';
+import 'package:draft_assistant/src/widgets/champions_grid.dart';
 
 class ChampionsList extends StatelessWidget {
   final String label;
@@ -10,17 +12,8 @@ class ChampionsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: draftAssistantAppBar(context, 'Champions List'),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Text(
-              'Liste des champions',
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
-            Text(label),
-            const SizedBox(height: 16),
-          ],
-        ),
+      body: Consumer(
+        builder: (context, ref, child) => championsGrid(context, ref),
       ),
       bottomNavigationBar: Container(
         padding: const EdgeInsets.all(12),
