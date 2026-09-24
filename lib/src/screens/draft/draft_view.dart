@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:draft_assistant/src/widgets/app_bar.dart';
 import 'package:draft_assistant/src/widgets/bottom_navigation_bar.dart';
 import 'package:draft_assistant/src/providers/draft_provider.dart';
-import 'package:draft_assistant/src/widgets/draft_widgets.dart';
+import 'package:draft_assistant/src/widgets/draft/team_side_selector.dart';
+import 'package:draft_assistant/src/widgets/draft/ban_section.dart';
+import 'package:draft_assistant/src/widgets/draft/champion_section.dart';
 
 class DraftView extends StatelessWidget {
   const DraftView({super.key});
@@ -22,6 +24,8 @@ class DraftView extends StatelessWidget {
               child: Column(
                 children: [
                   const SizedBox(height: 16),
+                  teamSideSelector(context, ref, draft),
+                  const SizedBox(height: 12),
                   Text(
                     'BANS',
                     style: Theme.of(context).textTheme.titleMedium,
@@ -48,6 +52,8 @@ class DraftView extends StatelessWidget {
                       ],
                     ],
                   ),
+                  const SizedBox(height: 20),
+                  championSection(context, ref, draft),
                 ],
               ),
             ),
