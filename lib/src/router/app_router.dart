@@ -3,6 +3,7 @@ import "package:draft_assistant/src/screens/champions_list/champions_list_view.d
 import "package:draft_assistant/src/screens/draft/draft_view.dart";
 import "package:draft_assistant/src/screens/profile/profile_view.dart";
 import "package:draft_assistant/src/screens/saves/saves_view.dart";
+import "package:draft_assistant/src/providers/draft_provider.dart";
 
 final appRouter = GoRouter(
   routes: [
@@ -22,7 +23,9 @@ final appRouter = GoRouter(
       path: '/champions-list',
       name: 'champions-list',
       builder: (context, state) => ChampionsList(
-        label: state.uri.queryParameters['label'] ?? 'Ban',
+        slot: DraftSlot.fromId(
+          state.uri.queryParameters['slot'] ?? DraftSlot.blueBan1.id,
+        ),
       ),
     ),
   ],

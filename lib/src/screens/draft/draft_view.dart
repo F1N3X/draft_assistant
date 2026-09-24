@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:draft_assistant/src/widgets/app_bar.dart';
 import 'package:draft_assistant/src/widgets/bottom_navigation_bar.dart';
-import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
+import 'package:draft_assistant/src/providers/draft_provider.dart';
+import 'package:draft_assistant/src/widgets/draft_widgets.dart';
 
 class DraftView extends StatelessWidget {
   const DraftView({super.key});
@@ -11,87 +12,47 @@ class DraftView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: draftAssistantAppBar(context, 'Live Draft'),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(12),
-        child: Center(
-          child: Column( // Column globale de la page
-            children: [
-              Column( // Column pour la phase 1 et les bans
+      body: Consumer(
+        builder: (context, ref, child) {
+          final draft = ref.watch(draftProvider);
+
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(12),
+            child: Center(
+              child: Column(
                 children: [
                   const SizedBox(height: 16),
                   Text(
-                    'PHASE 1 : SÉLECTION',
+                    'BANS',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(height: 16),
-                  Container( // Container pour les bans
-                    color: Theme.of(context).colorScheme.secondaryContainer,
-                    child: Column( // Column pour Bleu et Rouge
-                      children: [
-                        SizedBox(
-                          width: double.infinity,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Bleu',
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  for (int i = 0; i < 5; i++)
-                                    ElevatedButton(
-                                      onPressed: () => context.pushNamed(
-                                        'champions-list',
-                                        queryParameters: {'label': 'Ban bleu ${i + 1}'},
-                                      ),
-                                      style: ElevatedButton.styleFrom(
-                                        minimumSize: const Size(40, 40),
-                                      ),
-                                      child: iconoir.Plus(color: Theme.of(context).colorScheme.primary),
-                                    ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: double.infinity,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Rouge',
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  for (int i = 0; i < 5; i++)
-                                    ElevatedButton(
-                                      onPressed: () => context.pushNamed(
-                                        'champions-list',
-                                        queryParameters: {'label': 'Ban rouge ${i + 1}'},
-                                      ),
-                                      style: ElevatedButton.styleFrom(
-                                        minimumSize: const Size(40, 40),
-                                      ),
-                                      child: iconoir.Plus(color: Theme.of(context).colorScheme.primary),
-                                    ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ]
-                    )
+                  banSection(
+                    context,
+                    ref,
+                    draft,
+                    slots: const [
+                      [
+                        DraftSlot.blueBan1,
+                        DraftSlot.blueBan2,
+                        DraftSlot.blueBan3,
+                        DraftSlot.blueBan4,
+                        DraftSlot.blueBan5,
+                      ],
+                      [
+                        DraftSlot.redBan1,
+                        DraftSlot.redBan2,
+                        DraftSlot.redBan3,
+                        DraftSlot.redBan4,
+                        DraftSlot.redBan5,
+                      ],
+                    ],
                   ),
                 ],
               ),
-            ]
-          ),
-        ),
+            ),
+          );
+        },
       ),
       bottomNavigationBar: draftAssistantBottomNavigationBar(context, 0),
     );
