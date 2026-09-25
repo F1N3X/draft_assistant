@@ -18,6 +18,7 @@ class DraftAdvice {
   final List<String> strengths;
   final List<String> weaknesses;
   final String winCondition;
+  final double winRate;
   final List<ChampionAdvice> championAdvice;
 
   const DraftAdvice({
@@ -26,6 +27,7 @@ class DraftAdvice {
     required this.strengths,
     required this.weaknesses,
     required this.winCondition,
+    required this.winRate,
     required this.championAdvice,
   });
 
@@ -41,6 +43,7 @@ class DraftAdvice {
       strengths: stringList(decoded['strengths']),
       weaknesses: stringList(decoded['weaknesses']),
       winCondition: stringValue(decoded['win_condition']),
+      winRate: doubleValue(decoded['win_rate']),
       championAdvice: championAdviceList(decoded['champion_advice']),
     );
   }
@@ -77,9 +80,11 @@ Draft complète: ${draft.isComplete ? 'oui' : 'non'}
 
 Réponds UNIQUEMENT avec un objet JSON valide, sans markdown ni texte avant/après,
 en français, avec exactement ces clés:
-{"summary":"...","strengths":["..."],"weaknesses":["..."],"win_condition":"...","champion_advice":[{"champion":"Jinx","synergy":85},{"champion":"Ashe","synergy":70.6}]}
+{"summary":"...","strengths":["..."],"weaknesses":["..."],"win_condition":"...","win_rate":56.2,"champion_advice":[{"champion":"Jinx","synergy":85},{"champion":"Ashe","synergy":70.6}]}
 Chaque valeur doit être ultra condensée: summary, win_condition et chaque élément
 font au maximum 120 caractères; strengths et weaknesses contiennent au maximum 2 éléments.
+win_rate est une probabilité théorique actuelle de victoire de notre équipe, entre 0 et 100,
+avec au maximum un chiffre après la virgule. Ce n'est pas une statistique garantie.
 Si la draft est complète, champion_advice doit être []. Sinon, donne exactement 2
 conseils de champions jouables par notre équipe, avec leur nom et un pourcentage
 de synergie entre 0 et 100, avec au maximum un chiffre après la virgule.
@@ -102,6 +107,8 @@ String stripCodeFence(String value) {
 }
 
 String stringValue(Object? value) => value is String ? value : '';
+
+double doubleValue(Object? value) => value is num ? value.toDouble() : 0;
 
 List<String> stringList(Object? value) => value is List
     ? value.whereType<String>().toList(growable: false)
