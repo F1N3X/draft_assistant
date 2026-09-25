@@ -13,15 +13,20 @@ Future<void> signInWithGoogle(BuildContext context) async {
 
     await GoogleSignIn.instance.initialize(serverClientId: serverClientId);
 
-    final GoogleSignInAccount? googleUser = await GoogleSignIn.instance.authenticate();
+    final GoogleSignInAccount? googleUser = await GoogleSignIn.instance
+        .authenticate();
 
     if (googleUser == null) return;
 
-    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
 
-    final OAuthCredential credential = GoogleAuthProvider.credential(idToken: googleAuth.idToken);
+    final OAuthCredential credential = GoogleAuthProvider.credential(
+      idToken: googleAuth.idToken,
+    );
 
-    final UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+    final UserCredential userCredential = await FirebaseAuth.instance
+        .signInWithCredential(credential);
     final firebaseUser = userCredential.user;
 
     if (firebaseUser != null) {
@@ -30,16 +35,26 @@ Future<void> signInWithGoogle(BuildContext context) async {
 
     if (firebaseUser != null && context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Connexion avec Google réussie : ${firebaseUser.displayName}')),
+        SnackBar(
+          content: Text(
+            'Connexion avec Google réussie : ${firebaseUser.displayName}',
+          ),
+        ),
       );
     }
   } on GoogleSignInException catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Erreur lors de la récupération du token Google : $e')),
+      SnackBar(
+        content: Text('Erreur lors de la récupération du token Google : $e'),
+      ),
     );
   } on FirebaseAuthException catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('Erreur lors de la connexion avec Firebase: $e')),
     );
   }
+}
+
+Future<void> signOut() async {
+  await FirebaseAuth.instance.signOut();
 }
