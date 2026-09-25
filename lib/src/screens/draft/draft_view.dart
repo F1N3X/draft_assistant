@@ -26,10 +26,7 @@ class DraftView extends StatelessWidget {
                   const SizedBox(height: 16),
                   teamSideSelector(context, ref, draft),
                   const SizedBox(height: 12),
-                  Text(
-                    'BANS',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
+                  Text('BANS', style: Theme.of(context).textTheme.titleMedium),
                   const SizedBox(height: 16),
                   banSection(
                     context,
@@ -54,6 +51,41 @@ class DraftView extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   championSection(context, ref, draft),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    width: double.infinity,
+                    child: FilledButton.icon(
+                      onPressed: draft.isGeneratingAdvice
+                          ? null
+                          : () async {
+                              final advice = await ref
+                                  .read(draftProvider.notifier)
+                                  .requestAiAdvice();
+                              if (!context.mounted || advice != null) return;
+                              final error = ref.read(draftProvider).aiError;
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    error ??
+                                        'Impossible d\'obtenir un conseil.',
+                                  ),
+                                ),
+                              );
+                            },
+                      icon: draft.isGeneratingAdvice
+                          ? const SizedBox(
+                              width: 18,
+                              height: 18,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            )
+                          : const Icon(Icons.smart_toy_outlined),
+                      label: Text(
+                        draft.isGeneratingAdvice
+                            ? 'ANALYSE EN COURS...'
+                            : 'DEMANDER CONSEIL À L\'IA',
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

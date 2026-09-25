@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../models/champions.dart';
+import '../services/ai_service.dart';
 
 enum TeamSide { blue, red }
 
@@ -58,11 +58,17 @@ class DraftState {
   final Map<DraftSlot, Champions> selections;
   final Map<DraftSlot, String> searchQueries;
   final TeamSide myTeam;
+  final DraftAdvice? aiAdvice;
+  final bool isGeneratingAdvice;
+  final String? aiError;
 
   const DraftState({
     this.selections = const {},
     this.searchQueries = const {},
     this.myTeam = TeamSide.blue,
+    this.aiAdvice,
+    this.isGeneratingAdvice = false,
+    this.aiError,
   });
 
   Champions? selectedFor(DraftSlot slot) => selections[slot];
@@ -81,24 +87,36 @@ class DraftState {
         .map((entry) => entry.value)
         .toList(growable: false);
   }
-  
-  List<Champions> get blueBans => championsFor(TeamSide.blue, DraftSlotType.ban);
+
+  List<Champions> get blueBans =>
+      championsFor(TeamSide.blue, DraftSlotType.ban);
 
   List<Champions> get redBans => championsFor(TeamSide.red, DraftSlotType.ban);
 
-  List<Champions> get blueChampions => championsFor(TeamSide.blue, DraftSlotType.champion);
+  List<Champions> get blueChampions =>
+      championsFor(TeamSide.blue, DraftSlotType.champion);
 
-  List<Champions> get redChampions => championsFor(TeamSide.red, DraftSlotType.champion);
+  List<Champions> get redChampions =>
+      championsFor(TeamSide.red, DraftSlotType.champion);
+
+  bool get isComplete => blueChampions.length == 5 && redChampions.length == 5;
 
   DraftState copyWith({
     Map<DraftSlot, Champions>? selections,
     Map<DraftSlot, String>? searchQueries,
     TeamSide? myTeam,
+    DraftAdvice? aiAdvice,
+    bool? isGeneratingAdvice,
+    String? aiError,
+    bool resetAiError = false,
   }) {
     return DraftState(
       selections: selections ?? this.selections,
       searchQueries: searchQueries ?? this.searchQueries,
       myTeam: myTeam ?? this.myTeam,
+      aiAdvice: aiAdvice ?? this.aiAdvice,
+      isGeneratingAdvice: isGeneratingAdvice ?? this.isGeneratingAdvice,
+      aiError: resetAiError ? null : aiError ?? this.aiError,
     );
   }
 }
@@ -142,6 +160,28 @@ class DraftNotifier extends Notifier<DraftState> {
     state = state.copyWith(searchQueries: searchQueries);
   }
 
+  Future<DraftAdvice?> requestAiAdvice() async {
+    if (state.isGeneratingAdvice) {
+      return null;
+    }
+
+    state = state.copyWith(isGeneratingAdvice: true, resetAiError: true);
+    try {
+      final advice = await generateDraftAdvice(state);
+      state = state.copyWith(
+        aiAdvice: advice,
+        isGeneratingAdvice: false,
+        resetAiError: true,
+      );
+      return advice;
+    } catch (error) {
+      state = state.copyWith(
+        isGeneratingAdvice: false,
+        aiError: error.toString(),
+      );
+      return null;
+    }
+  }
 }
 
 final draftProvider = NotifierProvider<DraftNotifier, DraftState>(
