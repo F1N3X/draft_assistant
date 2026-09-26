@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:draft_assistant/src/widgets/app_bar.dart';
-import 'package:draft_assistant/src/widgets/champions_grid.dart';
+import 'package:draft_assistant/src/widgets/draft/champions_grid.dart';
 import 'package:draft_assistant/src/providers/draft_provider.dart';
 
 class ChampionsList extends StatelessWidget {

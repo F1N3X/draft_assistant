@@ -18,7 +18,6 @@ class ProfileView extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
-
           final user = snapshot.data;
           return user == null
               ? const SignedOutProfile()

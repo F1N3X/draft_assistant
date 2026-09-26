@@ -82,12 +82,7 @@ Widget banSection(BuildContext context, WidgetRef ref, DraftState draft, {requir
   );
 }
 
-Widget banSlotButton(
-  BuildContext context,
-  WidgetRef ref,
-  DraftState draft,
-  DraftSlot slot,
-) {
+Widget banSlotButton(BuildContext context, WidgetRef ref, DraftState draft, DraftSlot slot,) {
   final champion = draft.selectedFor(slot);
   final theme = Theme.of(context);
   final accent = slot.isBlue

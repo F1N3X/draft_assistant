@@ -1,5 +1,5 @@
 import "package:go_router/go_router.dart";
-import "package:draft_assistant/src/screens/champions_list/champions_list_view.dart";
+import "package:draft_assistant/src/screens/draft/champions_list_view.dart";
 import "package:draft_assistant/src/screens/draft/draft_view.dart";
 import "package:draft_assistant/src/screens/profile/profile_view.dart";
 import "package:draft_assistant/src/screens/saves/saves_view.dart";

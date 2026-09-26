@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../models/champions.dart';
-import '../providers/champions_provider.dart';
-import '../providers/draft_provider.dart';
+import '../../models/champions.dart';
+import '../../providers/champions_provider.dart';
+import '../../providers/draft_provider.dart';
 
 class ChampionsGrid extends StatelessWidget {
   final DraftSlot slot;
