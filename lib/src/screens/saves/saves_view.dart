@@ -88,11 +88,6 @@ class DraftCard extends StatelessWidget {
                 ),
               ),
               if (winRate != null) WinRate(value: winRate.toDouble()),
-              IconButton(
-                icon: const Icon(Icons.delete_outline, size: 19),
-                tooltip: 'Supprimer la draft',
-                onPressed: null,
-              ),
             ],
           ),
           const SizedBox(height: 8),
