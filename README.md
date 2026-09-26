@@ -2,6 +2,12 @@
 
 Draft Assistant est une application Flutter qui aide un joueur de League of Legends à analyser une composition de draft. Elle permet de choisir les bans et champions des équipes bleue et rouge, de consulter les champions disponibles, de demander une analyse générée par Firebase AI et de sauvegarder ses drafts.
 
+## Démonstration
+
+Une vidéo de démonstration de l'application est disponible sur YouTube :
+
+[Voir la vidéo de démonstration de Draft Assistant](https://youtu.be/0r0fIyuhh-Q)
+
 ## Fonctionnalités
 
 - Draft interactive avec 5 bans et 5 champions par équipe.
@@ -26,15 +32,6 @@ Draft Assistant est une application Flutter qui aide un joueur de League of Lege
 | Catalogue | Riot Data Dragon via Dio |
 | Cache local | ObjectBox |
 | Protection | Firebase App Check |
-
-## Démarrage rapide
-
-```bash
-git clone <url-du-depot>
-cd draft_assistant
-flutter pub get
-flutter run
-```
 
 Le lancement nécessite une configuration Firebase valide et, pour Google Sign-In, `GOOGLE_CLIENT_ID`. Voir [le guide de configuration](docs/setup_guide.md).
 
