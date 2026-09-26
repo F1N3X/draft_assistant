@@ -98,11 +98,12 @@ class ChampionsList extends StatelessWidget {
                 ),
                 ElevatedButton.icon(
                   onPressed: () => Navigator.pop(context),
-                  icon: const Icon(Icons.lock_outline, size: 17),
+                  icon: const Icon(Icons.check_outlined, size: 17),
                   label: const Text('Valider'),
                   style: ElevatedButton.styleFrom(
                     fixedSize: null,
                     minimumSize: const Size(94, 40),
+                    backgroundColor: Theme.of(context).colorScheme.secondary,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
