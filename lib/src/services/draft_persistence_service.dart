@@ -87,10 +87,18 @@ Future<List<SavedDraftRecord>> loadSavedDrafts({
         .doc(uid)
         .get();
     final draftIds = userSnapshot.data()?['draftIds'];
-    if (draftIds is! List) throw StateError('Aucun index Firestore valide.');
+    final ids = draftIds is List && draftIds.isNotEmpty
+        ? draftIds.whereType<String>().toList()
+        : (await FirebaseFirestore.instance
+                .collection('drafts')
+                .where('userId', isEqualTo: uid)
+                .get())
+            .docs
+            .map((draft) => draft.id)
+            .toList();
 
     final drafts = await Future.wait(
-      draftIds.whereType<String>().map((id) async {
+      ids.map((id) async {
         final snapshot = await FirebaseFirestore.instance
             .collection('drafts')
             .doc(id)
