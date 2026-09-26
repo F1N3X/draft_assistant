@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/champions.dart';
 import '../services/ai_service.dart';
+import '../services/draft_persistence_service.dart' as persistence;
+import '../services/objectbox_service.dart';
 
 enum TeamSide { blue, red }
 
@@ -60,6 +62,7 @@ class DraftState {
   final TeamSide myTeam;
   final DraftAdvice? aiAdvice;
   final bool isGeneratingAdvice;
+  final bool isSavingDraft;
   final String? aiError;
 
   const DraftState({
@@ -68,6 +71,7 @@ class DraftState {
     this.myTeam = TeamSide.blue,
     this.aiAdvice,
     this.isGeneratingAdvice = false,
+    this.isSavingDraft = false,
     this.aiError,
   });
 
@@ -107,6 +111,7 @@ class DraftState {
     TeamSide? myTeam,
     DraftAdvice? aiAdvice,
     bool? isGeneratingAdvice,
+    bool? isSavingDraft,
     String? aiError,
     bool resetAiError = false,
   }) {
@@ -116,6 +121,7 @@ class DraftState {
       myTeam: myTeam ?? this.myTeam,
       aiAdvice: aiAdvice ?? this.aiAdvice,
       isGeneratingAdvice: isGeneratingAdvice ?? this.isGeneratingAdvice,
+      isSavingDraft: isSavingDraft ?? this.isSavingDraft,
       aiError: resetAiError ? null : aiError ?? this.aiError,
     );
   }
@@ -180,6 +186,20 @@ class DraftNotifier extends Notifier<DraftState> {
         aiError: error.toString(),
       );
       return null;
+    }
+  }
+
+  Future<bool> saveDraft(String uid, ObjectBoxService objectBox) async {
+    if (state.isSavingDraft) return false;
+
+    state = state.copyWith(isSavingDraft: true);
+    try {
+      await persistence.saveDraft(uid: uid, draft: state, objectBox: objectBox);
+      state = state.copyWith(isSavingDraft: false);
+      return true;
+    } catch (_) {
+      state = state.copyWith(isSavingDraft: false);
+      return false;
     }
   }
 }

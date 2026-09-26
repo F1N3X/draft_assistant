@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:flutter/foundation.dart';
 import 'package:draft_assistant/src/theme/app_theme.dart';
+import 'package:draft_assistant/src/services/objectbox_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,7 +15,13 @@ Future<void> main() async {
         ? AndroidDebugProvider()
         : AndroidPlayIntegrityProvider(),
   );
-  runApp(const ProviderScope(child: MainApp()));
+  final objectBox = await ObjectBoxService.create();
+  runApp(
+    ProviderScope(
+      overrides: [objectBoxProvider.overrideWithValue(objectBox)],
+      child: const MainApp(),
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {

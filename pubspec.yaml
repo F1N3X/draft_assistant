@@ -20,12 +20,17 @@ dependencies:
   google_sign_in: ^7.2.0
   google_sign_in_platform_interface: ^3.1.0
   iconoir_flutter: ^7.12.1
+  objectbox: ^5.3.2
+  objectbox_flutter_libs: ^5.3.2
+  path_provider: ^2.1.6
   sign_in_button: ^5.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+  objectbox_generator: ^5.3.2
+  build_runner: ^2.15.1
 
 flutter:
   uses-material-design: true
